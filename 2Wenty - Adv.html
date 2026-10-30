@@ -1,0 +1,997 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>2Wenty</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a slow, editorial page. Hero thesis beside an example day that ends early, then philosophy, process, destinations, the Stranger's Tours teaser, and the mood-led planner with a live brief. */
+:root {
+  --black: #0a0909;
+  --ink: #131011;
+  --panel: #1b1819;
+  --line: #2e2a2b;
+  --grey: #8d8688;
+  --grey-light: #d2cccd;
+  --chalk: #dcd7d8;
+  --paper: #f3efef;
+  --red: #ff2a36;
+  --red-deep: #c8101c;
+  --red-wash: rgba(255, 42, 54, 0.14);
+  --f-display: "Unbounded", "Arial Black", sans-serif;
+  --f-serif: "Newsreader", Georgia, serif;
+  --f-body: "Hanken Grotesk", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--paper);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+.wrap { max-width: 1160px; margin: 0 auto; }
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+textarea { font: inherit; }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.12; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey); }
+.serif { font-family: var(--f-serif); }
+
+/* nav */
+nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+.logo { font-family: var(--f-display); font-weight: 900; font-size: 22px; text-decoration: none; letter-spacing: -0.02em; }
+.logo b { color: var(--red); font-weight: 900; }
+.nav-links { display: flex; gap: 24px; align-items: center; font-size: 14px; color: var(--grey-light); }
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { color: var(--paper); }
+.soon { font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; background: var(--red-wash); color: var(--red); border: 1px solid var(--red); border-radius: 999px; padding: 2px 8px; margin-left: 6px; vertical-align: 2px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--red); color: #fff; border: 0; padding: 13px 22px; border-radius: 999px; font-weight: 700; font-size: 15px; text-decoration: none; transition: background .15s; }
+.btn:hover { background: var(--red-deep); }
+.btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--paper); }
+.btn.ghost:hover { border-color: var(--grey); background: var(--panel); }
+
+/* hero */
+.hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: center; padding-block: 56px 80px; }
+.hero > * { min-width: 0; }
+.hero h1 { font-size: clamp(34px, 5.6vw, 68px); font-weight: 900; letter-spacing: -0.035em; margin-block: 20px 24px; }
+.hero h1 em { font-style: normal; color: var(--red); }
+.hero p.lead { font-family: var(--f-serif); font-size: clamp(19px, 2vw, 23px); line-height: 1.5; color: var(--grey-light); max-width: 34em; margin: 0 0 32px; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.day { background: var(--ink); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.day-head { display: flex; justify-content: space-between; gap: 12px; padding: 12px 18px; background: var(--red); font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #fff; }
+.day-row { display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 16px 18px; border-top: 1px solid var(--line); }
+.day-row:first-of-type { border-top: 0; }
+.day-row time { font-family: var(--f-mono); font-size: 14px; color: var(--red); padding-top: 2px; }
+.day-row b { display: block; font-weight: 600; }
+.day-row small { color: var(--grey); font-size: 13.5px; line-height: 1.4; display: block; }
+.day-end { padding: 14px 18px; background: var(--panel); border-top: 1px solid var(--line); font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--grey-light); display: flex; justify-content: space-between; gap: 12px; }
+.day-yours { margin: 14px; padding: 20px; border: 1px dashed var(--red); border-radius: 4px; background: var(--red-wash); }
+.day-yours b { font-family: var(--f-serif); font-style: italic; font-weight: 500; font-size: 24px; display: block; line-height: 1.2; }
+.day-yours small { color: var(--grey-light); font-size: 14px; display: block; margin-top: 6px; }
+
+/* sections */
+section { padding-block: 80px; border-top: 1px solid var(--line); }
+.sec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 40px; margin-bottom: 40px; }
+.sec-head h2 { font-size: clamp(26px, 3.6vw, 42px); font-weight: 700; letter-spacing: -0.025em; margin-top: 12px; max-width: 18em; }
+.sec-head p { margin: 0; color: var(--grey-light); max-width: 42ch; }
+
+/* philosophy */
+.phil-top { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; margin-bottom: 56px; align-items: start; }
+.phil-top > * { min-width: 0; }
+.big-quote { font-family: var(--f-serif); font-style: italic; font-weight: 400; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.25; letter-spacing: -0.01em; margin: 0; }
+.big-quote span { color: var(--red); }
+.phil-top p { color: var(--grey-light); margin: 0 0 14px; font-size: 17px; }
+.beliefs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.belief { padding: 28px 28px 28px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.belief:nth-child(even) { padding-left: 28px; padding-right: 0; border-left: 1px solid var(--line); }
+.belief h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 10px; }
+.belief p { margin: 0; color: var(--grey-light); font-size: 15.5px; }
+
+.pact { margin-top: 56px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; background: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 36px; }
+.pact > * { min-width: 0; }
+.pact h3 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin: 12px 0 14px; }
+.pact .serif { font-style: italic; font-size: 19px; color: var(--grey-light); margin: 0; line-height: 1.45; }
+.pact ul { list-style: none; margin: 0; padding: 0; }
+.pact li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; padding: 13px 0; border-bottom: 1px dashed var(--line); font-size: 15.5px; }
+.pact li:last-child { border-bottom: 0; }
+.pact li i { width: 10px; height: 10px; background: var(--red); border-radius: 50%; margin-top: 8px; }
+
+/* steps */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 6px; }
+.step { padding: 28px 24px; border-left: 1px solid var(--line); min-width: 0; }
+.step:first-child { border-left: 0; }
+.step .n { font-family: var(--f-mono); font-size: 12px; color: var(--red); letter-spacing: .12em; }
+.step h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; margin: 14px 0 10px; }
+.step p { margin: 0; color: var(--grey-light); font-size: 14.5px; }
+
+/* destinations */
+.dest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.dest { background: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 22px; text-align: left; display: flex; flex-direction: column; gap: 10px; min-width: 0; transition: border-color .15s, transform .15s; }
+.dest:hover { border-color: var(--red); transform: translateY(-2px); }
+.dest .code { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; color: var(--red); }
+.dest h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+.dest p { margin: 0; color: var(--grey-light); font-size: 14.5px; }
+.dest .meta { margin-top: auto; padding-top: 14px; border-top: 1px dashed var(--line); font-family: var(--f-mono); font-size: 12px; color: var(--grey); }
+.dest.is-on { border-color: var(--red); background: linear-gradient(180deg, var(--red-wash), var(--ink)); }
+
+/* strangers */
+.strangers { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; background: linear-gradient(135deg, var(--red-wash), var(--ink) 60%); border: 1px solid var(--red-deep); border-radius: 6px; padding: 44px; }
+.strangers > * { min-width: 0; }
+.strangers h2 { font-size: clamp(28px, 4vw, 46px); font-weight: 900; letter-spacing: -0.03em; margin: 16px 0 18px; }
+.strangers h2 em { font-style: normal; color: var(--red); }
+.strangers p.serif { font-size: 20px; line-height: 1.5; color: var(--grey-light); margin: 0 0 26px; max-width: 32em; }
+.facts-list { list-style: none; margin: 0; padding: 0; align-self: center; }
+.facts-list li { padding: 14px 0; border-bottom: 1px dashed var(--line); display: flex; justify-content: space-between; gap: 16px; font-size: 15px; }
+.facts-list li:last-child { border-bottom: 0; }
+.facts-list span:first-child { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--grey); padding-top: 3px; }
+.facts-list span:last-child { text-align: right; }
+
+/* planner */
+.planner { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 40px; align-items: start; }
+.planner > * { min-width: 0; }
+.q { padding-block: 28px; border-top: 1px solid var(--line); }
+.q:first-child { border-top: 0; padding-top: 0; }
+.q-label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.q-label h3 { font-size: 16px; font-weight: 700; letter-spacing: -0.005em; }
+.q-label span { font-family: var(--f-mono); font-size: 12px; color: var(--grey); text-align: right; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { background: var(--ink); border: 1px solid var(--line); color: var(--grey-light); padding: 10px 16px; border-radius: 999px; font-size: 14.5px; font-weight: 500; transition: all .12s; }
+.chip:hover { border-color: var(--grey); color: var(--paper); }
+.chip[aria-pressed="true"] { background: var(--red); border-color: var(--red); color: #fff; }
+
+.opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+.opt { background: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 16px; text-align: left; display: flex; gap: 14px; align-items: flex-start; min-width: 0; }
+.opt:hover { border-color: var(--grey); }
+.opt[aria-pressed="true"] { border-color: var(--red); background: var(--red-wash); }
+.opt svg { flex: none; width: 34px; height: 34px; stroke: var(--grey-light); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.opt[aria-pressed="true"] svg { stroke: var(--red); }
+.opt b { display: block; font-size: 15px; }
+.opt small { color: var(--grey); font-size: 13px; line-height: 1.35; display: block; margin-top: 2px; }
+.shape { margin: 14px 0 0; padding: 14px 16px; border-left: 2px solid var(--red); background: var(--ink); font-family: var(--f-serif); font-style: italic; font-size: 18px; color: var(--grey-light); line-height: 1.45; }
+.shape small { display: block; font-family: var(--f-mono); font-style: normal; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
+
+.seg { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--ink); }
+.seg button { background: transparent; border: 0; padding: 14px 16px; text-align: left; border-left: 1px solid var(--line); color: var(--grey-light); }
+.seg button:first-child { border-left: 0; }
+.seg button b { display: block; font-size: 15px; color: var(--paper); }
+.seg button small { color: var(--grey); font-size: 13px; }
+.seg button[aria-pressed="true"] { background: var(--red); }
+.seg button[aria-pressed="true"] b, .seg button[aria-pressed="true"] small { color: #fff; }
+
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: transparent; margin: 0; }
+input[type=range]::-webkit-slider-runnable-track { height: 4px; background: linear-gradient(90deg, var(--red) var(--fill, 50%), var(--line) var(--fill, 50%)); border-radius: 4px; }
+input[type=range]::-moz-range-track { height: 4px; background: var(--line); border-radius: 4px; }
+input[type=range]::-moz-range-progress { height: 4px; background: var(--red); border-radius: 4px; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--paper); border: 4px solid var(--red); margin-top: -9px; cursor: grab; }
+input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--paper); border: 4px solid var(--red); cursor: grab; }
+.range-big { font-family: var(--f-display); font-size: clamp(26px, 4vw, 36px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+.range-big small { font-family: var(--f-mono); font-size: 12px; color: var(--grey); letter-spacing: .08em; text-transform: uppercase; font-weight: 400; margin-left: 8px; }
+.ticks { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 11px; color: var(--grey); margin-top: 2px; }
+.age-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.age-row label { font-family: var(--f-mono); font-size: 12px; color: var(--grey); text-transform: uppercase; letter-spacing: .1em; display: block; margin-bottom: 4px; }
+.age-row .v { font-family: var(--f-display); font-size: 28px; font-weight: 700; color: var(--paper); }
+
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; background: var(--ink); }
+.stepper button { width: 48px; height: 48px; background: transparent; border: 0; font-size: 22px; border-radius: 50%; }
+.stepper button:hover { color: var(--red); }
+.stepper button:disabled { color: var(--line); cursor: default; }
+.stepper output { min-width: 64px; text-align: center; font-family: var(--f-display); font-size: 22px; font-weight: 700; }
+
+.field { display: block; margin-top: 16px; }
+.field span { display: block; font-size: 14.5px; color: var(--grey-light); margin-bottom: 8px; }
+.field textarea { width: 100%; min-height: 88px; resize: vertical; background: var(--ink); border: 1px solid var(--line); color: var(--paper); border-radius: 6px; padding: 12px 14px; font-size: 15px; line-height: 1.5; }
+.field textarea::placeholder { color: var(--grey); }
+.field textarea:focus { border-color: var(--red); outline: none; }
+
+/* brief */
+.brief { position: sticky; top: 16px; background: var(--ink); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.brief-top { background: var(--red); padding: 12px 18px; display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #fff; }
+.brief-body { padding: 6px 18px 18px; max-height: calc(100vh - 140px); overflow-y: auto; }
+.brief dl { margin: 0; }
+.brief .row { display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--line); font-size: 14px; }
+.brief dt { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--grey); padding-top: 3px; }
+.brief dd { margin: 0; color: var(--paper); min-width: 0; overflow-wrap: anywhere; }
+.brief .total { padding: 16px 0 6px; }
+.brief .total small { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--grey); display: block; }
+.brief .total strong { font-family: var(--f-display); font-size: 26px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.brief .actions { display: grid; gap: 10px; margin-top: 14px; }
+.note { font-size: 13px; color: var(--grey); margin: 12px 0 0; }
+.sample { font-family: var(--f-mono); font-size: 11px; color: var(--grey); padding: 10px 18px; border-top: 1px solid var(--line); background: var(--panel); }
+.toast { font-family: var(--f-mono); font-size: 12px; color: var(--red); min-height: 18px; margin-top: 8px; }
+.fallback { width: 100%; min-height: 150px; margin-top: 10px; background: var(--black); color: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 10px; font: 12px/1.5 var(--f-mono); }
+
+/* closing */
+.closing { text-align: center; padding-block: 96px 72px; }
+.closing p { font-family: var(--f-serif); font-style: italic; font-size: clamp(28px, 4.4vw, 52px); line-height: 1.2; max-width: 20em; margin: 0 auto 24px; letter-spacing: -0.01em; }
+.closing p span { color: var(--red); }
+footer { padding-top: 32px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--grey); font-size: 13px; }
+
+@media (max-width: 960px) {
+  .hero, .phil-top, .pact, .strangers, .planner { grid-template-columns: 1fr; gap: 36px; }
+  .hero { padding-block: 32px 56px; }
+  .brief { position: static; }
+  .brief-body { max-height: none; }
+  .nav-links a.hide-s { display: none; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .step:nth-child(3) { border-left: 0; }
+  .step:nth-child(n+3) { border-top: 1px solid var(--line); }
+  section { padding-block: 56px; }
+  .strangers, .pact { padding: 28px 22px; }
+}
+@media (max-width: 560px) {
+  .beliefs { grid-template-columns: 1fr; }
+  .belief, .belief:nth-child(even) { padding: 24px 0; border-left: 0; }
+  .steps { grid-template-columns: 1fr; }
+  .step, .step:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
+  .step:first-child { border-top: 0; }
+  .age-row { gap: 14px; }
+  .seg button { border-left: 0; border-top: 1px solid var(--line); }
+  .seg button:first-child { border-top: 0; }
+  .day-row { grid-template-columns: 52px 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+/* youth pass: hotter red, grain, chunky buttons, highlighter headline, ticket-stub card, sticker, marquee, solid red and chalk blocks */
+body::after { content: ""; position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: .07; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+.btn { color: var(--black); box-shadow: 4px 4px 0 var(--paper); transition: transform .12s, box-shadow .12s; }
+.btn:hover { background: var(--red); transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--paper); }
+.btn.ghost { color: var(--paper); box-shadow: 4px 4px 0 var(--line); }
+.btn.ghost:hover { background: var(--panel); box-shadow: 2px 2px 0 var(--line); }
+.chip[aria-pressed="true"], .seg button[aria-pressed="true"] b, .seg button[aria-pressed="true"] small, .brief-top, .day-head { color: var(--black); }
+.chip { font-weight: 600; }
+.chip[aria-pressed="true"] { transform: rotate(-1deg); }
+.hero { position: relative; }
+.hero::before { content: ""; position: absolute; top: -40px; right: 0; width: 520px; max-width: 100%; height: 520px; background: radial-gradient(circle, rgba(255, 42, 54, .3), transparent 65%); pointer-events: none; z-index: -1; }
+.hero h1 { font-size: clamp(36px, 6vw, 78px); line-height: 1.06; }
+.hero h1 em { color: var(--black); background: var(--red); padding: 0 .14em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.day { position: relative; transform: rotate(-1.4deg); box-shadow: 8px 8px 0 var(--red-deep); }
+.sticker { position: absolute; top: -26px; right: -14px; z-index: 2; width: 96px; height: 96px; border-radius: 50%; background: var(--paper); color: var(--black); display: grid; place-content: center; text-align: center; font-family: var(--f-display); font-weight: 900; font-size: 22px; line-height: 1; transform: rotate(12deg); box-shadow: 3px 3px 0 var(--red); }
+.sticker small { display: block; font-family: var(--f-mono); font-weight: 500; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; margin-top: 4px; }
+.marquee { overflow: hidden; background: var(--red); color: var(--black); border-radius: 4px; transform: rotate(-.6deg); margin-bottom: 8px; }
+.marquee-track { display: flex; width: max-content; animation: slide 36s linear infinite; }
+.marquee span { font-family: var(--f-display); font-weight: 700; font-size: 15px; letter-spacing: .04em; text-transform: uppercase; padding: 14px 20px; white-space: nowrap; }
+@keyframes slide { to { transform: translateX(-50%); } }
+.dest { border-radius: 10px; }
+.dest .code { font-size: 13px; font-weight: 500; }
+.dest:hover { transform: translateY(-3px) rotate(-.6deg); }
+.pact { background: var(--chalk); color: var(--black); border-color: var(--chalk); }
+.pact .eyebrow { color: #4b4546; }
+.pact .serif { color: #2a2526; }
+.pact li { border-bottom-color: rgba(10, 9, 9, .25); }
+.strangers { background: var(--red); color: var(--black); border-color: var(--red); }
+.strangers .eyebrow { color: #2b0a0c; }
+.strangers h2 em { color: var(--paper); }
+.strangers p.serif { color: #1a0a0b; }
+.strangers .btn { background: var(--black); color: var(--paper); box-shadow: 4px 4px 0 var(--paper); }
+.strangers .btn:hover { background: var(--black); box-shadow: 2px 2px 0 var(--paper); }
+.facts-list li { border-bottom-color: rgba(10, 9, 9, .35); }
+.facts-list span:first-child { color: #2b0a0c; }
+@media (max-width: 960px) { .day { transform: none; } .sticker { top: -22px; right: 8px; } }
+/* bespoke builder */
+.presets { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-bottom: 28px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+.tab { background: var(--ink); border: 1px solid var(--line); color: var(--grey-light); padding: 9px 14px; border-radius: 6px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; display: inline-flex; gap: 8px; align-items: center; transition: border-color .12s; }
+.tab:hover { border-color: var(--grey); color: var(--paper); }
+.tab[aria-selected="true"] { background: var(--paper); border-color: var(--paper); color: var(--black); }
+.tab .cnt { background: var(--red); color: var(--black); border-radius: 999px; font-size: 10px; padding: 1px 7px; min-width: 20px; text-align: center; }
+.panel-head { margin-bottom: 8px; }
+.panel-head h3 { font-size: clamp(24px, 3vw, 34px); font-weight: 700; letter-spacing: -0.02em; margin: 8px 0 8px; }
+.panel-head p { margin: 0; color: var(--grey-light); max-width: 52ch; }
+.panel .q:first-of-type { padding-top: 24px; }
+.panel-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; padding-top: 24px; border-top: 1px solid var(--line); }
+.rng-val { font-family: var(--f-display); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; }
+.rng-val.dim, .range-big.dim { color: var(--grey); }
+.inp { width: 100%; background: var(--ink); border: 1px solid var(--line); color: var(--paper); border-radius: 6px; padding: 12px 14px; font: inherit; font-size: 15px; line-height: 1.5; }
+.inp::placeholder { color: var(--grey); }
+.inp:focus { border-color: var(--red); outline: none; }
+textarea.inp { min-height: 84px; resize: vertical; }
+.stats-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; margin-bottom: 6px; }
+.stats-head strong { font-family: var(--f-display); font-size: 20px; }
+.stat { display: grid; grid-template-columns: 150px minmax(0, 1fr) 34px; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px dashed var(--line); }
+.stat b { display: block; font-size: 15px; }
+.stat small { display: block; color: var(--grey); font-size: 12.5px; line-height: 1.3; }
+.stat .sv { font-family: var(--f-display); font-weight: 700; text-align: right; font-size: 18px; }
+.arch { margin-top: 22px; padding: 20px; border: 1px dashed var(--red); border-radius: 4px; background: var(--red-wash); }
+.arch small { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--grey-light); display: block; margin-bottom: 6px; }
+.arch b { font-family: var(--f-serif); font-style: italic; font-weight: 500; font-size: clamp(24px, 3vw, 32px); line-height: 1.15; display: block; }
+.arch span { color: var(--grey-light); font-size: 15px; }
+.arch-mini { margin: 12px 0 4px; padding: 12px 14px; border: 1px dashed var(--red); border-radius: 4px; background: var(--red-wash); }
+.arch-mini small { font-family: var(--f-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--grey-light); display: block; }
+.arch-mini b { font-family: var(--f-serif); font-style: italic; font-weight: 500; font-size: 20px; display: block; line-height: 1.2; }
+.arch-mini span { font-size: 13px; color: var(--grey-light); }
+.grp { padding-top: 14px; }
+.grp h4 { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--red); margin: 0 0 2px; font-weight: 500; }
+.brief .row { grid-template-columns: 104px minmax(0, 1fr); }
+.brief-body { max-height: calc(100vh - 140px); overflow-y: auto; }
+@media (max-width: 700px) {
+  .tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; margin-inline: -4px; padding-inline: 4px; }
+  .tab { flex: none; }
+  .stat { grid-template-columns: 96px minmax(0, 1fr) 26px; gap: 12px; }
+  .stat small { display: none; }
+}
+.wrap { position: relative; isolation: isolate; }
+.bg-art { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
+.art { position: absolute; width: clamp(96px, 16vw, 210px); color: var(--grey-light); opacity: .25; animation: float 10s ease-in-out infinite alternate; animation-delay: var(--d, 0s); transform: rotate(var(--r, 0deg)); }
+.art svg { display: block; width: 100%; height: auto; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+@keyframes float { from { transform: translateY(0) rotate(var(--r, 0deg)); } to { transform: translateY(-18px) rotate(calc(var(--r, 0deg) + 4deg)); } }
+@media (prefers-reduced-motion: reduce) { .art { animation: none; } .marquee-track { animation: none; } .day, .marquee, .chip[aria-pressed="true"] { transform: none; } }
+</style>
+
+<div class="wrap">
+  <div class="bg-art" aria-hidden="true">
+    <div class="art" style="top:2%;right:-2%;--r:6deg;--d:-1s"><svg viewBox="0 0 200 200"><path d="M72 62a28 26 0 1 1 56 0c0 14-12 26-28 26s-28-12-28-26z"/><path d="M70 48c-8-2-12-10-8-16M130 48c8-2 12-10 8-16M100 34c-4-8 0-14 6-18"/><circle cx="90" cy="58" r="2"/><circle cx="110" cy="58" r="2"/><path d="M94 72q6 5 12 0"/><path d="M100 78c-6 8-22 12-40 28M100 78c8 6 24 10 42 26"/><path d="M84 88c-6 24-2 44 6 62h20c8-18 12-38 6-62"/><path d="M90 104q10 6 20 0M90 120q10 6 20 0M92 136q8 5 16 0"/><path d="M60 150h80M44 168q12-8 24 0t24 0t24 0t24 0t24 0"/></svg></div>
+    <div class="art" style="top:14%;left:-3%;--r:-5deg;--d:-4s"><svg viewBox="0 0 200 200"><path d="M16 168h168M24 168v-10h152v10"/><rect x="32" y="84" width="8" height="74"/><rect x="58" y="84" width="8" height="74"/><rect x="84" y="84" width="8" height="74"/><rect x="108" y="84" width="8" height="74"/><rect x="134" y="84" width="8" height="74"/><rect x="160" y="84" width="8" height="74"/><rect x="24" y="68" width="152" height="16"/><rect x="42" y="50" width="116" height="18"/><path d="M100 30V14M92 20l8-6 8 6M70 50c2-10 8-14 14-12M130 50c-2-10-8-14-14-12M84 50c0-12 4-18 16-18s16 6 16 18"/></svg></div>
+    <div class="art" style="top:25%;right:-2%;--r:-4deg;--d:-7s"><svg viewBox="0 0 200 200"><circle cx="152" cy="40" r="14"/><path d="M170 40h8M164.7 52.7l5.7 5.7M152 58v8M139.3 52.7l-5.7 5.7M134 40h-8M139.3 27.3l-5.7-5.7M152 22v-8M164.7 27.3l5.7-5.7"/><path d="M52 170c2-30 4-56 18-90"/><path d="M70 80c-12-12-30-14-44-6M70 80c-6-16-22-26-40-24M70 80c8-16 24-22 40-16M70 80c14-6 30-2 40 12M70 80c0 12-6 24-16 30"/><path d="M108 146h66q-4 14-18 16h-30q-14-2-18-16zM174 146l12-14M124 146v-14h30v14"/><path d="M10 180q10-7 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0"/></svg></div>
+    <div class="art" style="top:36%;left:1%;--r:4deg;--d:-2s"><svg viewBox="0 0 200 200"><path d="M34 170V60l10 6v20l10 6v20l10 6v58"/><path d="M166 170V60l-10 6v20l-10 6v20l-10 6v58"/><path d="M64 118c14-30 22-42 36-58 14 16 22 28 36 58"/><path d="M64 170h72M20 170h160"/></svg></div>
+    <div class="art" style="top:47%;right:0;--r:-6deg;--d:-5s"><svg viewBox="0 0 200 200"><path d="M14 170L78 70h44l64 100"/><path d="M78 70l9 10 8-7 9 9 8-8 9 9"/><circle cx="38" cy="40" r="14"/><path d="M26 114q37 8 74 0M30 124h66M42 114v56M84 114v56M63 124v-10"/></svg></div>
+    <div class="art" style="top:57%;left:-2%;--r:5deg;--d:-3s"><svg viewBox="0 0 200 200"><path d="M80 170l8-70h24l8 70z"/><path d="M84 100l16-20 16 20"/><path d="M100 92L58 50M100 92l42 42M100 92l42-42M100 92L58 134"/><path d="M66 54l10 10M134 130l-10-10M134 54l-10 10M66 130l10-10"/><path d="M156 170v-30M156 140c-8-4-10-14-6-20 4 2 6 4 6 8 0-4 2-6 6-8 4 6 2 16-6 20zM20 170h160"/></svg></div>
+    <div class="art" style="top:66%;right:-2%;--r:3deg;--d:-6s"><svg viewBox="0 0 200 200"><path d="M10 170L80 40l22 34 14-14 74 110z"/><path d="M68 62l10 12 8-8 12 14M110 76l8-6"/><path d="M16 46l168-14M100 39v14h14V37z"/></svg></div>
+    <div class="art" style="top:76%;left:2%;--r:-4deg;--d:-8s"><svg viewBox="0 0 200 200"><path d="M130 80a24 24 0 0 1 40 0"/><path d="M50 112l40-36 40 36z"/><path d="M60 112v26h60v-26M82 138v-16h16v16"/><path d="M30 138h140M40 138v30M70 138v30M100 138v30M130 138v30M160 138v30"/><path d="M10 176q10-7 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0"/></svg></div>
+    <div class="art" style="top:85%;right:-1%;--r:5deg;--d:-2s"><svg viewBox="0 0 200 200"><path d="M14 170c4-40 8-66 22-84 14 18 20 44 22 84"/><path d="M66 170c4-50 10-84 26-104 16 20 22 54 26 104"/><path d="M128 170c2-28 8-48 20-60 12 12 18 32 20 60"/><path d="M120 160h60q-6 10-16 10h-28q-12 0-16-10zM150 160v-34M150 128l24 28h-24z"/><path d="M10 180q10-7 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0"/></svg></div>
+    <div class="art" style="top:91%;left:-2%;--r:-5deg;--d:-4s"><svg viewBox="0 0 200 200"><path d="M100 18v22M92 44h16M88 44L70 170M112 44l18 126M80 96h40M72 130h56M60 170h80M80 170q20-40 40 0"/></svg></div>
+  </div>
+  <nav>
+    <a class="logo" href="#top">2<b>W</b>enty</a>
+    <div class="nav-links">
+      <a class="hide-s" href="#philosophy">Philosophy</a>
+      <a class="hide-s" href="#how">How it works</a>
+      <a class="hide-s" href="#destinations">Destinations</a>
+      <a class="hide-s" href="#strangers">Stranger's Tours<span class="soon">Soon</span></a>
+      <a class="btn" href="#planner">Plan my trip</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div>
+      <span class="eyebrow">Be a traveller, not a tourist</span>
+      <h1>Your youth is short. <em>Book the room with the bathtub.</em></h1>
+      <p class="lead">Every trip is built from scratch around how you feel, down to the bathroom and the breakfast. Soon we'll also bring strangers together on small-group tours.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#planner">Plan my trip</a>
+        <a class="btn ghost" href="#philosophy">Why we travel slowly</a>
+      </div>
+    </div>
+
+    <div class="day" aria-label="An example 2Wenty day">
+      <div class="sticker" aria-hidden="true">19–40<small>Ages only</small></div>
+      <div class="day-head"><span>An example day</span><span>Tokyo</span></div>
+      <div class="day-row"><time>07:00</time><div><b>Walk before the city wakes</b><small>Quiet streets, shutters going up.</small></div></div>
+      <div class="day-row"><time>09:30</time><div><b>Ride the local train</b><small>The way residents commute.</small></div></div>
+      <div class="day-row"><time>13:00</time><div><b>Lunch a neighbour recommended</b><small>A counter with six seats.</small></div></div>
+      <div class="day-row"><time>16:30</time><div><b>One landmark, no rush</b><small>Approached with the respect it has earned.</small></div></div>
+      <div class="day-end"><span>17:30</span><span>Organised day ends</span></div>
+      <div class="day-yours"><b>The evening is yours.</b><small>Live music, a bookshop, a bar, or the skyline coming on.</small></div>
+    </div>
+  </header>
+
+  <div class="marquee" aria-hidden="true"><div class="marquee-track">
+    <span>Japan ● Netherlands ● EU Package ● Germany ● Indonesia ● Thailand ● Vietnam ● Singapore ● Switzerland ● Maldives ●</span>
+    <span>Japan ● Netherlands ● EU Package ● Germany ● Indonesia ● Thailand ● Vietnam ● Singapore ● Switzerland ● Maldives ●</span>
+  </div></div>
+
+  <section id="philosophy">
+    <div class="phil-top">
+      <div>
+        <span class="eyebrow">Our philosophy</span>
+        <p class="big-quote" style="margin-top:18px">A country is not a museum. It wakes before sunrise, commutes, queues for trains. <span>We'd like you to see that.</span></p>
+      </div>
+      <div style="padding-top:34px">
+        <p>Most travel is sold by quantity: more cities, more monuments, more photographs in fewer days. You come home remembering where you went and little of how it felt.</p>
+        <p>2Wenty is built the other way round. A traveller knows they are a guest. They observe before speaking, adapt before expecting, and enter unfamiliar places with curiosity.</p>
+      </div>
+    </div>
+
+    <div class="beliefs">
+      <div class="belief"><h3>Fewer places, understood better</h3><p>We'd rather you remember how a place made you feel than how many you ticked off.</p></div>
+      <div class="belief"><h3>The train is part of the destination</h3><p>Public transport and long walks show you how a city lives, so we plan around them.</p></div>
+      <div class="belief"><h3>Room between the highlights</h3><p>Space to pause, get lost without getting anxious, and go back to a street because it felt welcoming.</p></div>
+      <div class="belief"><h3>Freedom inside a frame</h3><p>Enough guidance to feel secure, enough independence to feel alive. Every route is walked before you walk it.</p></div>
+    </div>
+
+    <div class="pact">
+      <div>
+        <span class="eyebrow">Every traveller agrees</span>
+        <h3>The Traveller's Pact</h3>
+        <p class="serif">A shared understanding, not rules from above. Not everyone is meant to travel with us, and that is fine.</p>
+      </div>
+      <ul>
+        <li><i></i><span>We keep our voices low on trains and respect silence where it is valued.</span></li>
+        <li><i></i><span>We wait in queues without complaint.</span></li>
+        <li><i></i><span>We don't turn temples, stations or streets into stages for social media.</span></li>
+        <li><i></i><span>We leave no litter for others to collect.</span></li>
+        <li><i></i><span>We remember we are guests, and that how we behave speaks for everyone who comes after us.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="sec-head">
+      <div><span class="eyebrow">How it works</span><h2>It starts with a conversation, not a payment.</h2></div>
+      <p>Compatibility matters more than filling seats, so we talk before anything is booked.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="n">STEP 1</span><h3>Tell us how you feel</h3><p>Your mood, where, who with, your budget and the kind of room you want.</p></div>
+      <div class="step"><span class="n">STEP 2</span><h3>We talk</h3><p>What draws you, what makes you nervous, whether you've travelled on your own before.</p></div>
+      <div class="step"><span class="n">STEP 3</span><h3>We plan around you</h3><p>Route, stays and pace shaped by your mood, with space left on purpose.</p></div>
+      <div class="step"><span class="n">STEP 4</span><h3>You travel</h3><p>Guided where it helps, free where it matters. Evenings are yours.</p></div>
+    </div>
+  </section>
+
+  <section id="destinations">
+    <div class="sec-head">
+      <div><span class="eyebrow">Where to</span><h2>Choose a place worth understanding.</h2></div>
+      <p>Tap to add a destination to your trip. Pick more than one and we'll talk through which fits your mood.</p>
+    </div>
+    <div class="dest-grid" id="destGrid"></div>
+  </section>
+
+  <section id="strangers">
+    <div class="strangers">
+      <div>
+        <span class="eyebrow">Planned format</span>
+        <h2>Stranger's Tours. <em>Announced soon.</em></h2>
+        <p class="serif">Small groups of people who have never met, travelling slowly through one place together. Everyone talks with us first. Everyone signs the Traveller's Pact. By the end, they're not strangers.</p>
+        <button class="btn" type="button" id="strangerBtn">Tell us I'm interested</button>
+      </div>
+      <ul class="facts-list">
+        <li><span>Group</span><span>About 20 travellers</span></li>
+        <li><span>Length</span><span>Around two weeks</span></li>
+        <li><span>Joining</span><span>A conversation first</span></li>
+        <li><span>Getting around</span><span>Trains and on foot</span></li>
+        <li><span>Dates &amp; places</span><span>To be announced</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="planner">
+    <div class="sec-head">
+      <div><span class="eyebrow">Bespoke trip builder</span><h2>Build your trip. As deep as you like.</h2></div>
+      <p>Every trip is made from scratch. Choose a little or a lot, in any order. Whatever you leave open, we'll talk through with you.</p>
+    </div>
+
+    <div class="presets">
+      <span class="eyebrow">Start from</span>
+      <div class="chips" id="presets"></div>
+    </div>
+
+    <div class="planner">
+      <div class="builder" id="builder">
+        <div class="tabs" id="tabs" role="tablist" aria-label="Trip builder sections"></div>
+        <div class="panel" id="panel" role="tabpanel"></div>
+        <div class="panel-nav">
+          <button class="btn ghost" id="prevTab" type="button">Back</button>
+          <span class="eyebrow" id="tabPos"></span>
+          <button class="btn" id="nextTab" type="button">Next</button>
+        </div>
+      </div>
+
+      <aside class="brief" aria-label="Your trip brief">
+        <div class="brief-top"><span>Trip brief</span><span id="choiceCount">0 choices</span></div>
+        <div class="brief-body">
+          <div id="briefList"></div>
+          <div class="total"><small>Group budget</small><strong id="groupTotal">₹3,00,000</strong></div>
+          <div class="actions">
+            <button class="btn" id="copyBtn" type="button">Copy trip brief</button>
+            <button class="btn ghost" id="resetBtn" type="button">Clear everything</button>
+          </div>
+          <div class="toast" id="toast" role="status"></div>
+          <p class="note">Send us the brief and we'll talk before anything is booked. Budgets are what you'd like to spend, not a quote.</p>
+        </div>
+        <div class="sample" id="sampleNote">Showing a sample selection. Change anything.</div>
+      </aside>
+    </div>
+  </section>
+
+  <div class="closing">
+    <p>Travel, at its finest, is <span>an act of humility.</span></p>
+    <a class="btn" href="#planner">Plan my trip</a>
+  </div>
+
+  <footer>
+    <span>© 2026 2Wenty. Be a traveller, not a tourist.</span>
+    <span>Dates, prices and Stranger's Tours details are subject to change.</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var inr = new Intl.NumberFormat('en-IN');
+  var rupee = function (n) { return '₹' + inr.format(n); };
+  var O = function (x) { return typeof x === 'string' ? { id: x, t: x } : x; };
+  var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); };
+  var clone = function (o) { return JSON.parse(JSON.stringify(o)); };
+  var rand = function (n) { return Math.floor(Math.random() * n); };
+
+  var T0 = 'A trip planned for me';
+  var T1 = "Stranger's Tour (coming soon)";
+
+  var DESTS = [
+    { n: "Japan", c: "TYO", d: "Quiet temple mornings in Kyoto, neon Tokyo evenings, trains that run to the minute.", m: "Best: Mar–Apr, Oct–Nov" },
+    { n: "Netherlands", c: "AMS", d: "Canal-side walks, bikes, museums and brown cafés.", m: "Best: Apr–Sep" },
+    { n: "EU Package", c: "EUR", d: "Several countries, one slow itinerary, connected by train.", m: "Best: May–Sep" },
+    { n: "Germany", c: "MUC", d: "Berlin after dark, Bavarian towns, wine on the Rhine.", m: "Best: May–Oct, Dec" },
+    { n: "Indonesia", c: "DPS", d: "Bali villages, Lombok surf, boats to the Gili islands.", m: "Best: May–Sep" },
+    { n: "Thailand", c: "BKK", d: "Street food in Bangkok, then the Andaman coast.", m: "Best: Nov–Feb" },
+    { n: "Vietnam", c: "SGN", d: "Hanoi food walks, Ha Long Bay, Da Nang beaches.", m: "Best: Feb–Apr" },
+    { n: "Singapore", c: "SIN", d: "Hawker centres, rooftop bars and an easy first trip abroad.", m: "Best: Feb–Apr" },
+    { n: "Switzerland", c: "ZRH", d: "Alpine trains, lakes, and snow in winter.", m: "Best: Jun–Sep, Dec–Mar" },
+    { n: "Maldives", c: "MLE", d: "Slow island days and water the colour of glass.", m: "Best: Nov–Apr" }
+  ];
+
+  var MOODS = [
+    { id: "I need quiet", t: "I need quiet", s: "Tired, overloaded, ready to slow down", shape: "Few stops, long mornings, a river and a coffee with nowhere to be." },
+    { id: "I'm restless", t: "I'm restless", s: "Need to move and see something new", shape: "Trains between cities, long walks, a new neighbourhood each day." },
+    { id: "I'm curious", t: "I'm curious", s: "Want to learn how a place thinks", shape: "Local markets, bookshops, and tables a resident recommended." },
+    { id: "I'm celebrating", t: "I'm celebrating", s: "A milestone worth marking", shape: "One or two moments built with care, the rest left unhurried." },
+    { id: "I want a fresh start", t: "I want a fresh start", s: "A change of scene and new perspective", shape: "Gentle first days, then room to wander and think." },
+    { id: "I want company", t: "I want company", s: "Meet people, not just places", shape: "Shared tables and long conversations. A good fit for a Stranger's Tour." }
+  ];
+
+  var BATH_ICONS = {
+    tub: '<path d="M4 13h24v3a7 7 0 0 1-7 7H11a7 7 0 0 1-7-7v-3zM8 13V8a3 3 0 0 1 6 0M9 26l-1 3M23 26l1 3"/>',
+    large: '<path d="M5 28V6a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2v22M5 12h22M12 18h8M12 22h8"/>',
+    glass: '<rect x="5" y="5" width="22" height="22" rx="2"/><path d="M16 5v22M5 16h22M20 9l3 3M20 19l3 3"/>'
+  };
+
+  var STATS = [
+    ['Culture', 'Museums, temples, history, how a place thinks'],
+    ['Adventure', 'Hikes, water, anything with a bit of risk'],
+    ['Nature', 'Mountains, islands, quiet green places'],
+    ['Food', 'Markets, counters and long meals'],
+    ['Nightlife', 'Bars, live music, late walks'],
+    ['Relaxation', 'Baths, spas, slow mornings'],
+    ['Shopping', 'Markets, vintage, small makers'],
+    ['Romance', 'Candlelight, views, time for two']
+  ];
+  var CAP = 40;
+  var ARCH = {
+    Culture: 'The Curious Wanderer', Adventure: 'The Restless Explorer', Nature: 'The Quiet Naturalist', Food: 'The Table Hunter',
+    Nightlife: 'The Night Walker', Relaxation: 'The Slow Soaker', Shopping: 'The Market Rover', Romance: 'The Hopeless Romantic'
+  };
+
+  /* field helpers */
+  function multi(k, t, opts, o) { return Object.assign({ k: k, t: t, type: 'multi', opts: opts }, o || {}); }
+  function single(k, t, opts, o) { return Object.assign({ k: k, t: t, type: 'single', opts: opts }, o || {}); }
+  function range(k, t, min, max, def, fmt, o) { return Object.assign({ k: k, t: t, type: 'range', min: min, max: max, step: 1, def: def, fmt: fmt }, o || {}); }
+  function step(k, t, min, max, def, fmt) { return { k: k, t: t, type: 'step', min: min, max: max, def: def, fmt: fmt }; }
+  function text(k, t, ph, area) { return { k: k, t: t, type: area ? 'area' : 'text', ph: ph }; }
+
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Flexible'];
+  var SPICE = ['No spice', 'Mild', 'Medium', 'Hot', 'Very hot', 'Fiery'];
+
+  var TABS = [
+    { id: 'where', t: 'Where & when', intro: 'Start with where you want to be and how you want to feel.', fields: [
+      single('type', 'What are you after?', [
+        { id: T0, t: 'A trip planned for me', s: 'Private, built around you' },
+        { id: T1, t: "Stranger's Tour", s: "Coming soon. Tell us you're interested." }
+      ], { view: 'seg' }),
+      single('mood', 'Your mood', MOODS, { view: 'cards', h: 'we shape the trip around it' }),
+      multi('dest', 'Location', DESTS.map(function (d) { return d.n; }).concat(['Other', 'Still deciding'])),
+      text('cities', 'Cities, regions or places already in mind', 'Kyoto and Osaka, a Bali beach, the Black Forest…', true),
+      multi('months', 'Travel month', MONTHS),
+      range('length', 'Trip length', 3, 21, 7, function (v) { return v + ' days'; }),
+      single('flex', 'Date flexibility', ['Fixed dates', 'A few days either way', 'A week either way', 'Fully flexible']),
+      single('from', 'Flying from', ['Kolkata', 'Delhi', 'Mumbai', 'Bengaluru', 'Hyderabad', 'Chennai', 'Pune', 'Other'])
+    ] },
+    { id: 'people', t: 'People', intro: "Who's coming, and how everyone likes to be looked after.", fields: [
+      step('members', 'Members', 1, 12, 2, function (v) { return v + (v === 1 ? ' person' : ' people'); }),
+      { k: 'ages', t: 'Age range of the group', type: 'ages', h: '19 to 40' },
+      single('who', 'Travelling as', ['Solo', 'Couple', 'Friends', 'Siblings', 'Colleagues', 'Mixed group']),
+      single('exp', 'Travel experience', ['First time abroad', 'Travelled a little', 'Travelled on my own before', 'Frequent traveller']),
+      single('guide', 'Guide or host', ['No preference', 'A woman guide', 'A man guide', 'Both a woman and a man']),
+      text('access', 'Anything that would make the trip easier for your group', 'Early check-in, limited walking, travelling with a first-timer…', true)
+    ] },
+    { id: 'stay', t: 'Stay', intro: 'Hotel, apartment or something stranger. Tell us what a good base looks like.', fields: [
+      multi('stayType', 'Type of stay', ['Hotel', 'Service apartment', 'Boutique hotel', 'Resort', 'Private villa', 'Hostel (private room)', 'Guesthouse or ryokan', 'Homestay', 'Capsule hotel', 'Houseboat or unusual stay']),
+      single('quality', 'Comfort level', [
+        { id: 'Comfortable and well-located', t: 'Comfortable and well-located', s: 'Clean, central, no frills' },
+        { id: 'Mid-range', t: 'Mid-range', s: 'Good rooms, good service' },
+        { id: 'Upscale', t: 'Upscale', s: 'Design hotels, great beds' },
+        { id: 'Luxury', t: 'Luxury', s: 'The best room we can find' },
+        { id: 'Mix it up', t: 'Mix it up', s: 'Splurge some nights, save on others' }
+      ], { view: 'cards' }),
+      multi('location', 'Where the stay should be', ['Walk to a train station', 'Old town', 'Nightlife area', 'Quiet residential street', 'Beachfront', 'City centre', 'Near nature', 'Near cafés and food']),
+      single('bases', 'How often we move', ['One base the whole trip', 'Two or three bases', 'A new place most nights']),
+      multi('amen', 'Amenities', ['Breakfast included', 'Kitchenette', 'Laundry', 'Pool', 'Gym', 'Rooftop', 'Spa', 'Workspace', 'Balcony', 'Free cancellation', 'Late check-out', 'Soundproofing', 'Blackout curtains', 'Bar on property', 'Lift access', '24-hour reception'])
+    ] },
+    { id: 'room', t: 'Room', intro: 'How many rooms, which beds, which view.', fields: [
+      step('rooms', 'Rooms', 1, 6, 1, function (v) { return v + (v === 1 ? ' room' : ' rooms'); }),
+      single('share', 'Who shares', ['Everyone together', 'Couples share', 'Own room each', 'A mix']),
+      multi('bed', 'Beds', ['King bed', 'Queen bed', 'Twin beds', 'Sofa bed', 'Bunk (hostel)']),
+      single('size', 'Room size', [
+        { id: 'Compact is fine', t: 'Compact is fine', s: 'We are out all day' },
+        { id: 'Roomy', t: 'Roomy', s: 'Space to spread out' },
+        { id: 'Suite', t: 'Suite', s: 'A sitting area and more' }
+      ], { view: 'seg' }),
+      multi('view', 'View', ['City skyline', 'Sea', 'Mountain', 'Garden', 'River or canal', 'Street life', 'No preference']),
+      single('floor', 'Floor', ['High floor', 'Low floor', 'No preference']),
+      multi('roomx', 'In the room', ['Private balcony', 'Desk', 'Sofa seating', 'Mini bar', 'Coffee machine', 'Kettle', 'Walk-in wardrobe', 'Smart TV', 'Fast Wi-Fi', 'Air conditioning control'])
+    ] },
+    { id: 'bath', t: 'Bathroom', intro: 'The part everyone asks about: tubs, glass, rain showers and long soaks.', fields: [
+      multi('bath', 'Bathroom type', [
+        { id: 'Bathtub', t: 'Bathtub', s: 'A proper soaking tub in the room', i: BATH_ICONS.tub },
+        { id: 'Large bathroom', t: 'Large bathroom', s: 'Room to move, double vanity, walk-in shower', i: BATH_ICONS.large },
+        { id: 'Glass-window bathroom', t: 'Glass window bathroom', s: 'Bathroom with a glass window into the room', i: BATH_ICONS.glass }
+      ], { view: 'cards' }),
+      multi('bathMore', 'Bathroom extras', ['Freestanding tub', 'Two-person tub', 'Rain shower', 'Walk-in shower', 'Double vanity', 'Heated floor', 'Bidet', 'Separate toilet', 'Open-air bath', 'Hot spring (onsen) access', 'Bathrobes and slippers', 'Premium toiletries', 'Hair dryer', 'Natural light', 'A view from the bath']),
+      single('privacy', 'Privacy', ['Fully private', 'Glass is fine for couples', "Don't mind"]),
+      single('jac', 'Jacuzzi', [
+        { id: 'Private jacuzzi in room', t: 'Private jacuzzi', s: 'In your room or villa' },
+        { id: 'Private pool villa jacuzzi', t: 'Villa with jacuzzi', s: 'Own pool and jacuzzi' },
+        { id: 'Hotel jacuzzi', t: 'Hotel jacuzzi', s: 'Shared, on the property' },
+        { id: 'Not needed', t: 'Not needed', s: 'Skip it' }
+      ], { view: 'seg' }),
+      multi('wellness', 'Wellness', ['Spa day', 'Massage', 'Sauna', 'Steam room', 'Hot springs', 'Hammam', 'Yoga', 'Pool time'])
+    ] },
+    { id: 'food', t: 'Food', intro: 'What you eat, what you avoid, and how brave you are.', fields: [
+      multi('diet', 'Diet', ['Vegetarian', 'Vegan', 'Eggetarian', 'Non-vegetarian', 'Pescatarian', 'Halal', 'Jain', 'No beef', 'No pork', 'Gluten-free', 'Dairy-free'], { norand: true }),
+      text('avoid', 'Allergies or anything to avoid', 'Peanuts, shellfish, very spicy food…', false),
+      range('spice', 'Spice tolerance', 0, 5, 3, function (v) { return SPICE[v]; }, { lo: 'No spice', hi: 'Fiery' }),
+      range('adv', 'Food adventurousness', 0, 10, 5, function (v) { return v + ' out of 10'; }, { lo: 'Safe bets', hi: 'Try anything' }),
+      multi('eat', 'Where you like to eat', ['Street food', 'Convenience store meals', 'Family-run restaurants', 'Cafés and bakeries', 'Markets', 'Fine dining', 'Cooking class', 'Food walks', 'Late-night eats', 'Bars and cocktails']),
+      single('indian', 'Indian food on the trip', ['None needed', 'Now and then', 'Often']),
+      single('brk', 'Breakfast', ['Hotel buffet', 'Local café', 'Grab and go', 'Skip it']),
+      multi('drinks', 'Drinks', ['Coffee', 'Tea', 'Cocktails', 'Craft beer', 'Wine', 'Sake or soju', 'Mocktails', 'No alcohol'], { norand: true })
+    ] },
+    { id: 'pace', t: 'Pace', intro: 'How busy the days are, and where we leave space.', fields: [
+      range('pace', 'Pace', 1, 10, 3, function (v) { return v <= 2 ? 'Very slow' : v <= 4 ? 'Slow' : v <= 6 ? 'Balanced' : v <= 8 ? 'Busy' : 'Packed'; }, { lo: 'Slow', hi: 'Packed' }),
+      range('guidance', 'Guidance', 0, 10, 4, function (v) { return v <= 2 ? 'Fully guided' : v <= 4 ? 'Mostly guided' : v <= 6 ? 'Half and half' : v <= 8 ? 'Mostly independent' : 'Fully independent'; }, { lo: 'Fully guided', hi: 'Fully independent' }),
+      range('walk', 'Daily walking', 2, 20, 8, function (v) { return 'Up to ' + v + ' km a day'; }, { lo: '2 km', hi: '20 km' }),
+      single('morning', 'Mornings', ['Sunrise walks', 'Early start', 'Mid-morning', 'Slow starts']),
+      single('dayEnds', 'The organised day ends', ['Mid-afternoon', 'Early evening', 'After dinner', 'Late night']),
+      step('free', 'Free days with nothing planned', 0, 5, 1, function (v) { return v + (v === 1 ? ' free day' : ' free days'); }),
+      single('landmarks', 'Big landmarks', ['Must-sees only', 'A few big ones', 'Skip the crowds'])
+    ] },
+    { id: 'move', t: 'Getting around', intro: 'Trains, flights, and how you move between places.', fields: [
+      multi('transport', 'On the ground', ['Trains', 'Metro and buses', 'Walking', 'Bikes', 'Taxis', 'Private car', 'Ferries', 'Scooters', 'Scenic routes', 'Night trains', 'Domestic flights']),
+      single('fclass', 'Flights', ['Economy', 'Premium economy', 'Business', 'A mix']),
+      single('stops', 'Stops', ['Direct only', 'One stop is fine', 'Cheapest route']),
+      single('transfer', 'Airport transfers', ['Private transfer', 'Public transport', "I'll sort it"]),
+      single('luggage', 'Luggage', ['Carry-on only', 'One checked bag', 'More luggage']),
+      single('visa', 'Visa help', ['Please help', 'Already sorted', 'Not sure'])
+    ] },
+    { id: 'do', t: 'Activities', intro: 'What fills the days.', fields: [
+      multi('plans', 'Plans', ['Chill and beach', 'Adventure', 'Nightlife', 'Food and culture', 'Romantic', 'Long walks and trains', 'Music and bookshops', 'Photography', 'Shopping', 'Temples and history', 'Museums and galleries', 'Hiking', 'Diving and snorkelling', 'Surfing', 'Skiing', 'Festivals', 'Street art', 'Wildlife', 'Islands', 'Road trips', 'Live sport', 'Anime and games', 'Theme parks']),
+      multi('hands', 'Hands-on', ['Cooking class', 'Pottery', 'Tea ceremony', 'Language lesson', 'Dance class', 'Calligraphy', 'Surf lesson', 'Dive course', 'Street art walk']),
+      single('tours', 'Tours', ['Self-guided with tips', 'Small guided walks', 'A mix', 'Private guide'])
+    ] },
+    { id: 'eve', t: 'Evenings', intro: 'The organised day ends early. This is what your evening looks like.', fields: [
+      multi('evening', 'Evenings', ['Live music', 'Bookstores', 'Galleries', 'Bars', 'Karaoke', 'Cafés', 'Night walks', 'Rooftops', 'Clubs', 'Night markets', 'Early nights', 'Cooking in']),
+      single('evFree', 'How free are evenings', ['Always free', 'Some group dinners', 'A few organised nights']),
+      single('nightEnd', 'Nights end', ['Early', 'Around midnight', 'Late'])
+    ] },
+    { id: 'occ', t: 'Occasion', intro: "Mark a moment and we'll plan around it.", fields: [
+      multi('events', 'Special events', ['Birthday', 'Anniversary', 'Honeymoon', 'Proposal', 'Bachelor or bachelorette', 'Friends reunion', 'Graduation', 'New job', 'Just because']),
+      text('occDate', 'Date of the occasion', 'e.g. 14 February', false),
+      single('surprise', 'Surprise level', ['No surprise', 'Small touches', 'Full surprise']),
+      multi('extras', 'Extras', ['Flowers in the room', 'Cake', 'Candlelit dinner', 'Rooftop dinner', 'Decorated room', 'Photographer', 'Handwritten note', 'Private transfer', 'A room with a view', 'Gift hamper'])
+    ] },
+    { id: 'stats', t: 'Trip stats', intro: 'Spend 40 points. Where you put them shapes the whole trip.', fields: [
+      { k: 'stats', t: 'Your points', type: 'stats', h: 'give each a score from 0 to 10' }
+    ] },
+    { id: 'budget', t: 'Budget', intro: "What you'd like to spend, and where it should go.", fields: [
+      range('budget', 'Budget per person', 40000, 500000, 150000, function (v) { return rupee(v) + (v >= 500000 ? '+' : '') + ' per person'; }, { step: 10000, big: true, lo: '₹40K', hi: '₹5L+', h: 'flights, stay, activities' }),
+      multi('splurge', 'Splurge on', ['Stay', 'Food', 'Experiences', 'Flights', 'Shopping', 'Transport']),
+      multi('save', 'Save on', ['Stay', 'Food', 'Experiences', 'Flights', 'Shopping', 'Transport']),
+      single('cap', 'How firm is the budget', ['Hard cap', 'Some room', 'Flexible']),
+      single('split', 'Paying', ['Each pays own', 'Split equally', 'One person pays', 'Not sure'])
+    ] },
+    { id: 'about', t: 'About you', intro: 'A few words so we can talk properly.', fields: [
+      text('name', 'Your name', 'First name is fine', false),
+      text('contact', 'How to reach you', 'Phone or email', false),
+      text('draws', 'What draws you to this trip?', "A place you've always wondered about, a person, a feeling you want back.", true),
+      text('nervous', 'Is anything making you nervous?', "First flight alone, a language you don't speak, being around new people.", true),
+      text('notes', 'Anything else', 'Anything we did not ask.', true)
+    ] }
+  ];
+
+  var F = {};
+  TABS.forEach(function (tab) { tab.fields.forEach(function (f) { F[f.k] = f; }); });
+  F.ageMin = { type: 'range', min: 19, max: 40, step: 1, def: 24 };
+  F.ageMax = { type: 'range', min: 19, max: 40, step: 1, def: 30 };
+
+  var S, cur = 0;
+
+  var PRESETS = [
+    { id: 'quiet', t: 'Quiet reset', s: { type: T0, mood: 'I need quiet', pace: 2, guidance: 6, walk: 6, dayEnds: 'Early evening', morning: 'Slow starts', stayType: ['Boutique hotel', 'Guesthouse or ryokan'], quality: 'Upscale', bath: ['Bathtub', 'Large bathroom'], bathMore: ['Hot spring (onsen) access', 'Freestanding tub'], jac: 'Hotel jacuzzi', wellness: ['Spa day', 'Massage', 'Hot springs'], stats: { Relaxation: 9, Nature: 7, Culture: 5, Food: 6, Romance: 3, Adventure: 1, Nightlife: 0, Shopping: 1 } } },
+    { id: 'couple', t: 'Couple, slow burn', s: { type: T0, mood: "I'm celebrating", who: 'Couple', members: 2, events: ['Anniversary'], surprise: 'Small touches', extras: ['Candlelit dinner', 'Flowers in the room'], bath: ['Bathtub', 'Glass-window bathroom'], bathMore: ['Two-person tub', 'Rain shower'], jac: 'Private jacuzzi in room', privacy: 'Glass is fine for couples', stayType: ['Boutique hotel'], quality: 'Upscale', stats: { Romance: 9, Food: 7, Relaxation: 7, Culture: 5, Nature: 4, Nightlife: 2, Adventure: 2, Shopping: 2 } } },
+    { id: 'friends', t: 'Friends trip', s: { type: T0, mood: 'I want company', who: 'Friends', members: 6, rooms: 3, share: 'A mix', stayType: ['Service apartment', 'Hotel'], pace: 7, evening: ['Bars', 'Live music', 'Night markets', 'Karaoke'], events: ['Friends reunion'], budget: 100000, stats: { Nightlife: 8, Adventure: 7, Food: 7, Culture: 4, Shopping: 4, Nature: 3, Relaxation: 2, Romance: 0 } } },
+    { id: 'bday', t: 'Birthday', s: { type: T0, mood: "I'm celebrating", events: ['Birthday'], surprise: 'Full surprise', extras: ['Cake', 'Rooftop dinner', 'Photographer', 'Decorated room'], evening: ['Rooftops', 'Bars'], quality: 'Upscale', stats: { Food: 8, Nightlife: 7, Romance: 5, Culture: 4, Relaxation: 5, Adventure: 4, Shopping: 4, Nature: 3 } } },
+    { id: 'first', t: 'First time abroad', s: { type: T0, exp: 'First time abroad', dest: ['Singapore', 'Thailand'], guidance: 2, indian: 'Often', visa: 'Please help', transfer: 'Private transfer', pace: 4, quality: 'Mid-range', landmarks: 'A few big ones', length: 6, stats: { Culture: 6, Food: 7, Adventure: 4, Nature: 5, Nightlife: 3, Relaxation: 5, Shopping: 5, Romance: 1 } } }
+  ];
+
+  function emptyState() { return { stats: {} }; }
+  function sampleState() {
+    return { type: T0, mood: "I'm curious", dest: ['Japan'], bath: ['Bathtub', 'Glass-window bathroom'], jac: 'Private jacuzzi in room', plans: ['Food and culture', 'Long walks and trains'], events: ['Anniversary'], stayType: ['Boutique hotel'], pace: 3, stats: { Culture: 7, Food: 8, Relaxation: 6, Romance: 6, Nature: 3, Adventure: 2, Nightlife: 3, Shopping: 2 } };
+  }
+
+  function label(f, id) {
+    var o = (f.opts || []).map(O).filter(function (x) { return x.id === id; })[0];
+    return o ? o.t : id;
+  }
+  function statsTotal() { var t = 0; STATS.forEach(function (x) { t += (S.stats || {})[x[0]] || 0; }); return t; }
+  function eff(k) { return S[k] !== undefined ? S[k] : F[k].def; }
+
+  function archetype() {
+    var arr = STATS.map(function (x) { return [x[0], (S.stats || {})[x[0]] || 0]; }).filter(function (x) { return x[1] > 0; }).sort(function (a, b) { return b[1] - a[1]; });
+    if (!arr.length) return null;
+    return { name: ARCH[arr[0][0]], sub: arr[1] ? 'with a streak of ' + arr[1][0].toLowerCase() : '' };
+  }
+
+  function valText(f) {
+    var v = S[f.k];
+    switch (f.type) {
+      case 'multi': return (v && v.length) ? v.map(function (x) { return label(f, x); }).join(', ') : '';
+      case 'single': return v ? label(f, v) : '';
+      case 'range': return v !== undefined ? f.fmt(v) : '';
+      case 'step': return v !== undefined ? f.fmt(v) : '';
+      case 'text': case 'area': return (v || '').trim();
+      case 'ages': return (S.ageMin !== undefined || S.ageMax !== undefined) ? (eff('ageMin') + ' to ' + eff('ageMax')) : '';
+      case 'stats': return statsTotal() > 0 ? STATS.map(function (x) { return [x[0], (S.stats || {})[x[0]] || 0]; }).filter(function (x) { return x[1] > 0; }).sort(function (a, b) { return b[1] - a[1]; }).map(function (x) { return x[0] + ' ' + x[1]; }).join(', ') : '';
+    }
+    return '';
+  }
+
+  function groups() {
+    var out = [];
+    TABS.forEach(function (tab) {
+      var rows = [];
+      tab.fields.forEach(function (f) { var v = valText(f); if (v) rows.push([f.l || f.t, v]); });
+      if (rows.length) out.push({ tab: tab.t, rows: rows });
+    });
+    return out;
+  }
+
+  function countTab(tab) {
+    var n = 0;
+    tab.fields.forEach(function (f) {
+      var v = S[f.k];
+      if (f.type === 'multi') n += (v || []).length;
+      else if (f.type === 'ages') n += (S.ageMin !== undefined || S.ageMax !== undefined) ? 1 : 0;
+      else if (f.type === 'stats') n += statsTotal() > 0 ? 1 : 0;
+      else if (valText(f)) n += 1;
+    });
+    return n;
+  }
+
+  /* rendering */
+  function fieldHTML(f) {
+    var hint = f.h || (f.type === 'multi' ? 'choose any' : f.type === 'single' ? 'choose one' : '');
+    var h = '<div class="q"><div class="q-label"><h3>' + esc(f.t) + '</h3><span>' + esc(hint) + '</span></div>';
+    if (f.type === 'multi' || f.type === 'single') {
+      var opts = f.opts.map(O);
+      var btn = function (o, cls, inner) { return '<button type="button" class="' + cls + '" data-k="' + f.k + '" data-v="' + esc(o.id) + '" aria-pressed="false">' + inner + '</button>'; };
+      if (f.view === 'cards') {
+        h += '<div class="opts">' + opts.map(function (o) { return btn(o, 'opt', (o.i ? '<svg viewBox="0 0 32 32" aria-hidden="true">' + o.i + '</svg>' : '') + '<span><b>' + esc(o.t) + '</b>' + (o.s ? '<small>' + esc(o.s) + '</small>' : '') + '</span>'); }).join('') + '</div>';
+        if (f.k === 'mood') h += '<p class="shape" id="shape" hidden></p>';
+      } else if (f.view === 'seg') {
+        h += '<div class="seg">' + opts.map(function (o) { return btn(o, '', '<b>' + esc(o.t) + '</b>' + (o.s ? '<small>' + esc(o.s) + '</small>' : '')); }).join('') + '</div>';
+      } else {
+        h += '<div class="chips">' + opts.map(function (o) { return btn(o, 'chip', esc(o.t)); }).join('') + '</div>';
+      }
+    } else if (f.type === 'range') {
+      h += '<div class="' + (f.big ? 'range-big' : 'rng-val') + '" data-out="' + f.k + '"></div>' +
+        '<input type="range" data-r="' + f.k + '" min="' + f.min + '" max="' + f.max + '" step="' + f.step + '" aria-label="' + esc(f.t) + '">' +
+        (f.lo ? '<div class="ticks"><span>' + esc(f.lo) + '</span><span>' + esc(f.hi) + '</span></div>' : '');
+    } else if (f.type === 'step') {
+      h += '<div class="stepper"><button type="button" data-k="' + f.k + '" data-step="-1" aria-label="Fewer">−</button><output data-out="' + f.k + '" aria-live="polite"></output><button type="button" data-k="' + f.k + '" data-step="1" aria-label="More">+</button></div>';
+    } else if (f.type === 'text') {
+      h += '<input class="inp" type="text" data-t="' + f.k + '" placeholder="' + esc(f.ph || '') + '" aria-label="' + esc(f.t) + '">';
+    } else if (f.type === 'area') {
+      h += '<textarea class="inp" data-t="' + f.k + '" placeholder="' + esc(f.ph || '') + '" aria-label="' + esc(f.t) + '"></textarea>';
+    } else if (f.type === 'ages') {
+      h += '<div class="age-row"><div><label for="ageMin">Youngest</label><div class="v" data-out="ageMin"></div><input type="range" id="ageMin" data-r="ageMin" min="19" max="40" step="1"></div>' +
+        '<div><label for="ageMax">Oldest</label><div class="v" data-out="ageMax"></div><input type="range" id="ageMax" data-r="ageMax" min="19" max="40" step="1"></div></div>';
+    } else if (f.type === 'stats') {
+      h += '<div class="stats-head"><span class="eyebrow">Trip points</span><strong id="pointsLeft"></strong></div>' +
+        STATS.map(function (x) { return '<div class="stat"><div><b>' + x[0] + '</b><small>' + esc(x[1]) + '</small></div><input type="range" data-stat="' + x[0] + '" min="0" max="10" step="1" aria-label="' + x[0] + '"><span class="sv" data-sv="' + x[0] + '"></span></div>'; }).join('') +
+        '<div class="arch" id="arch"></div>';
+    }
+    return h + '</div>';
+  }
+
+  function renderTabs() {
+    $('tabs').innerHTML = TABS.map(function (tab, i) {
+      var n = countTab(tab);
+      return '<button type="button" class="tab" role="tab" data-tab="' + i + '" aria-selected="' + (i === cur) + '">' + esc(tab.t) + (n ? '<span class="cnt">' + n + '</span>' : '') + '</button>';
+    }).join('');
+  }
+
+  function renderPanel() {
+    var tab = TABS[cur];
+    $('panel').innerHTML = '<div class="panel-head"><span class="eyebrow">Step ' + (cur + 1) + ' of ' + TABS.length + '</span><h3>' + esc(tab.t) + '</h3><p>' + esc(tab.intro) + '</p></div>' + tab.fields.map(fieldHTML).join('');
+    tab.fields.forEach(function (f) {
+      if (f.type === 'text' || f.type === 'area') { var el = document.querySelector('[data-t="' + f.k + '"]'); if (el) el.value = S[f.k] || ''; }
+    });
+    $('prevTab').disabled = cur === 0;
+    $('nextTab').textContent = cur === TABS.length - 1 ? 'Copy trip brief' : 'Next: ' + TABS[cur + 1].t;
+    $('tabPos').textContent = (cur + 1) + ' / ' + TABS.length;
+    refresh();
+  }
+
+  function fill(el) { el.style.setProperty('--fill', ((el.value - el.min) / (el.max - el.min) * 100) + '%'); }
+
+  function refresh() {
+    document.querySelectorAll('#panel [data-v]').forEach(function (el) {
+      var k = el.dataset.k, f = F[k], v = el.dataset.v;
+      var on = f.type === 'multi' ? (S[k] || []).indexOf(v) > -1 : S[k] === v;
+      el.setAttribute('aria-pressed', on);
+    });
+    document.querySelectorAll('#panel [data-r]').forEach(function (el) {
+      var k = el.dataset.r, f = F[k];
+      el.value = eff(k); fill(el);
+      var out = document.querySelector('[data-out="' + k + '"]');
+      if (out) {
+        var touched = S[k] !== undefined || ((k === 'ageMin' || k === 'ageMax') && false);
+        if (k === 'ageMin' || k === 'ageMax') out.textContent = eff(k);
+        else if (f.big) { out.innerHTML = esc(rupee(eff(k)) + (eff(k) >= f.max ? '+' : '')) + '<small>per person</small>'; out.classList.toggle('dim', !touched); }
+        else { out.textContent = f.fmt(eff(k)); out.classList.toggle('dim', !touched); }
+      }
+    });
+    document.querySelectorAll('#panel .stepper [data-out]').forEach(function (out) {
+      var k = out.dataset.out, f = F[k];
+      out.textContent = f.fmt(eff(k));
+      var btns = out.parentNode.querySelectorAll('button');
+      btns[0].disabled = eff(k) <= f.min; btns[1].disabled = eff(k) >= f.max;
+    });
+    document.querySelectorAll('#panel [data-stat]').forEach(function (el) {
+      var n = el.dataset.stat, v = (S.stats || {})[n] || 0;
+      el.value = v; fill(el);
+      var sv = document.querySelector('[data-sv="' + n + '"]'); if (sv) sv.textContent = v;
+    });
+    var pl = $('pointsLeft'); if (pl) pl.textContent = (CAP - statsTotal()) + ' of ' + CAP + ' left';
+    var ar = $('arch');
+    if (ar) { var a = archetype(); ar.innerHTML = a ? '<small>Your traveller type</small><b>' + esc(a.name) + '</b>' + (a.sub ? '<span>' + esc(a.sub) + '</span>' : '') : '<small>Your traveller type</small><span>Spend a few points to find out.</span>'; }
+    var sh = $('shape');
+    if (sh) { var m = MOODS.filter(function (x) { return x.id === S.mood; })[0]; sh.hidden = !m; if (m) sh.innerHTML = '<small>How we would shape it</small>' + esc(m.shape); }
+    document.querySelectorAll('.dest').forEach(function (el) {
+      var on = (S.dest || []).indexOf(el.dataset.name) > -1;
+      el.classList.toggle('is-on', on); el.setAttribute('aria-pressed', on);
+    });
+    document.querySelectorAll('#tabs .tab').forEach(function (el, i) {
+      var n = countTab(TABS[i]);
+      var c = el.querySelector('.cnt');
+      if (n && !c) { c = document.createElement('span'); c.className = 'cnt'; el.appendChild(c); }
+      if (c) { if (n) c.textContent = n; else c.remove(); }
+    });
+    renderBrief();
+  }
+
+  function renderBrief() {
+    var g = groups(), count = 0;
+    TABS.forEach(function (tab) { count += countTab(tab); });
+    var h = '', a = archetype();
+    if (a) h += '<div class="arch-mini"><small>Traveller type</small><b>' + esc(a.name) + '</b>' + (a.sub ? '<span>' + esc(a.sub) + '</span>' : '') + '</div>';
+    if (!g.length) h += '<p class="note">Nothing chosen yet. Pick a preset above, or start with the first tab.</p>';
+    g.forEach(function (x) {
+      h += '<div class="grp"><h4>' + esc(x.tab) + '</h4><dl>' + x.rows.map(function (r) { return '<div class="row"><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join('') + '</dl></div>';
+    });
+    $('briefList').innerHTML = h;
+    $('groupTotal').textContent = rupee(eff('budget') * eff('members'));
+    $('choiceCount').textContent = count + (count === 1 ? ' choice' : ' choices');
+  }
+
+  function briefText() {
+    var lines = ['2WENTY TRIP BRIEF'];
+    var a = archetype(); if (a) lines.push('Traveller type: ' + a.name + (a.sub ? ', ' + a.sub : ''));
+    groups().forEach(function (x) { lines.push('', x.tab.toUpperCase()); x.rows.forEach(function (r) { lines.push(r[0] + ': ' + r[1]); }); });
+    lines.push('', 'Group budget: ' + rupee(eff('budget') * eff('members')));
+    return lines.join('\n');
+  }
+
+  function toast(msg) { $('toast').textContent = msg; clearTimeout(toast.t); toast.t = setTimeout(function () { $('toast').textContent = ''; }, 3500); }
+  function copyBrief() {
+    var txt = briefText();
+    var ok = function () { toast('Trip brief copied.'); };
+    var fb = function () {
+      var ta = document.getElementById('fb');
+      if (!ta) { ta = document.createElement('textarea'); ta.id = 'fb'; ta.className = 'fallback'; ta.readOnly = true; $('toast').after(ta); }
+      ta.value = txt; ta.focus(); ta.select(); toast('Select and copy the text below.');
+    };
+    try { navigator.clipboard.writeText(txt).then(ok, fb); } catch (e) { fb(); }
+  }
+
+  function setTab(i, scroll) {
+    cur = Math.max(0, Math.min(TABS.length - 1, i));
+    renderTabs(); renderPanel();
+    if (scroll) $('builder').scrollIntoView();
+  }
+  function hideSample() { $('sampleNote').hidden = true; }
+
+  function randomise() {
+    var s = emptyState();
+    TABS.forEach(function (tab) {
+      tab.fields.forEach(function (f) {
+        if (f.norand) return;
+        var o = f.opts ? f.opts.map(O) : null;
+        if (f.type === 'multi') { var pool = o.map(function (x) { return x.id; }).sort(function () { return Math.random() - .5; }); s[f.k] = pool.slice(0, 1 + rand(Math.min(3, pool.length))); }
+        else if (f.type === 'single') s[f.k] = o[rand(o.length)].id;
+        else if (f.type === 'range') s[f.k] = f.min + f.step * rand(Math.floor((f.max - f.min) / f.step) + 1);
+        else if (f.type === 'step') s[f.k] = f.min + rand(f.max - f.min + 1);
+      });
+    });
+    var a = 19 + rand(12); s.ageMin = a; s.ageMax = Math.min(40, a + rand(10));
+    for (var i = 0; i < CAP; i++) { var n = STATS[rand(STATS.length)][0]; if ((s.stats[n] || 0) < 10) s.stats[n] = (s.stats[n] || 0) + 1; else i--; }
+    return s;
+  }
+
+  /* events */
+  $('tabs').addEventListener('click', function (e) { var b = e.target.closest('[data-tab]'); if (b) setTab(+b.dataset.tab, false); });
+  $('prevTab').onclick = function () { setTab(cur - 1, true); };
+  $('nextTab').onclick = function () { if (cur === TABS.length - 1) copyBrief(); else setTab(cur + 1, true); };
+
+  $('panel').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-k]'); if (!b) return;
+    var k = b.dataset.k, f = F[k];
+    if (b.dataset.step) { S[k] = Math.max(f.min, Math.min(f.max, eff(k) + (+b.dataset.step))); }
+    else if (b.dataset.v !== undefined) {
+      var v = b.dataset.v;
+      if (f.type === 'multi') { S[k] = S[k] || []; var i = S[k].indexOf(v); if (i > -1) S[k].splice(i, 1); else S[k].push(v); }
+      else S[k] = S[k] === v ? '' : v;
+    }
+    refresh();
+  });
+
+  $('panel').addEventListener('input', function (e) {
+    var t = e.target;
+    if (t.dataset.r) {
+      var k = t.dataset.r; S[k] = +t.value;
+      if (k === 'ageMin' && eff('ageMin') > eff('ageMax')) S.ageMax = S.ageMin;
+      if (k === 'ageMax' && eff('ageMax') < eff('ageMin')) S.ageMin = S.ageMax;
+      refresh();
+    } else if (t.dataset.stat) {
+      var n = t.dataset.stat; S.stats = S.stats || {};
+      var others = statsTotal() - (S.stats[n] || 0), v = +t.value;
+      if (others + v > CAP) v = CAP - others;
+      S.stats[n] = v; t.value = v; refresh();
+    } else if (t.dataset.t) {
+      S[t.dataset.t] = t.value; renderBrief(); renderTabsCounts();
+    }
+  });
+  function renderTabsCounts() {
+    document.querySelectorAll('#tabs .tab').forEach(function (el, i) {
+      var n = countTab(TABS[i]), c = el.querySelector('.cnt');
+      if (n && !c) { c = document.createElement('span'); c.className = 'cnt'; el.appendChild(c); }
+      if (c) { if (n) c.textContent = n; else c.remove(); }
+    });
+  }
+
+  $('presets').innerHTML = PRESETS.map(function (p) { return '<button type="button" class="chip" data-preset="' + p.id + '">' + esc(p.t) + '</button>'; }).join('') + '<button type="button" class="chip" data-preset="random">Surprise me</button>';
+  $('presets').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-preset]'); if (!b) return;
+    var id = b.dataset.preset;
+    if (id === 'random') S = randomise();
+    else { S = emptyState(); var p = clone(PRESETS.filter(function (x) { return x.id === id; })[0].s); Object.keys(p).forEach(function (k) { S[k] = p[k]; }); }
+    hideSample(); renderTabs(); renderPanel();
+  });
+
+  $('copyBtn').onclick = copyBrief;
+  $('resetBtn').onclick = function () { S = emptyState(); hideSample(); cur = 0; renderTabs(); renderPanel(); };
+
+  var g = $('destGrid');
+  DESTS.forEach(function (d) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'dest'; b.dataset.name = d.n;
+    b.innerHTML = '<span class="code">' + d.c + '</span><h3>' + d.n + '</h3><p>' + d.d + '</p><span class="meta">' + d.m + '</span>';
+    b.onclick = function () { S.dest = S.dest || []; var i = S.dest.indexOf(d.n); if (i > -1) S.dest.splice(i, 1); else S.dest.push(d.n); refresh(); };
+    g.appendChild(b);
+  });
+  $('strangerBtn').onclick = function () {
+    S.type = T1; if (!S.mood) S.mood = 'I want company';
+    hideSample(); setTab(0, true);
+  };
+
+  S = sampleState();
+  renderTabs(); renderPanel();
+})();
+</script>
+
+</body></html>
